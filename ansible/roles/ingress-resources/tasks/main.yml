@@ -1,0 +1,26 @@
+---
+
+#### Pull Ingress Resources Github Repo
+
+- name: Pull Ingress Resources
+  git:
+    repo: "{{ GITHUB_REPO }}"
+    dest: "{{ DIRECTORY }}"
+    version: "{{ BRANCH }}"
+    clone: yes
+
+#### Retrive Ingress Resources Yaml File
+
+- find:
+    paths: "{{ DIRECTORY }}"
+    patterns: "*.yaml"
+    recurse: True
+  register: resources_files
+
+#### Install Ingress Resources
+
+- name: Install Ingress Resources
+  k8s:
+    src: "{{ item }}"
+  loop: "{{ resources_files|json_query('files[].path') }}"
+

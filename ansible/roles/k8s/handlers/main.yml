@@ -1,0 +1,7 @@
+---
+
+#### Success Kubernetes Installation
+
+- name: success
+  debug:
+    msg: "Success Installation Kubernetes and Helm ( Package Manager )"

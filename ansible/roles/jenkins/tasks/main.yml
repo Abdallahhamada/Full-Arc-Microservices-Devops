@@ -1,0 +1,54 @@
+---
+
+#### Pull JENKINS (CI/CD) Github Repo
+
+- name: Pull Jenkins Github
+  git:
+    repo: "{{ GITHUB_REPO }}"
+    dest: "{{ DIRECTORY }}"
+    version: "{{ BRANCH }}"
+    clone: yes
+
+#### Retrive Jenkins Yaml File
+
+- find:
+    paths: "{{ DIRECTORY }}"
+    patterns: "*.yaml"
+  register: jenkins_files
+
+#### Install Jenkins => (CI/CD)
+
+- name: Install Jenknis
+  k8s:
+    src: "{{ item }}"
+  loop: "{{ jenkins_files|json_query('files[].path') }}"
+
+#### Pause for 1 minutes => (CI/CD)
+
+- name: Pause for 1 minutes
+  pause:
+    minutes: 1
+
+# #### Check Jenkins Accessability
+
+# - name: Check Jenkins Accessability
+#   shell: if [ $({{ JENKINS_ACCESS }}) ]; then exit 0; else exit 1; fi;
+#   register: wait_for_ext_ip
+#   until: wait_for_ext_ip.rc == 0
+#   retries: 10
+#   delay: 5
+
+# #### Get Jenkins Accessability Dashboard
+
+# - name: Get Jenkins Accessability Dashboard
+#   command: "{{ JENKINS_ACCESS_HOSTNAME }}"
+#   register: jenkins
+#   when: wait_for_ext_ip.rc == 0
+#   notify: print-dashboard
+  
+#### Get Jenkins Password Dashboard
+
+- name: Get Jenkins Password Dashboard
+  shell: "{{ JENKINS_PASSWORD }}"
+  register: password
+  notify: print-password

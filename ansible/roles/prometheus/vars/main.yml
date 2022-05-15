@@ -1,0 +1,7 @@
+---
+
+BRANCH: prometheus
+DIRECTORY: prometheus
+GITHUB_REPO: https://github.com/Mahmoudalziem/Full-Arc-Microservices-Devops.git
+GRAFANA_ACCESS: kubectl get svc grafana -n monitoring --output jsonpath='{.status.loadBalancer.ingress[0]}'
+GRAFANA_ACCESS_HOSTNAME: kubectl get svc grafana -n monitoring --output jsonpath='{.status.loadBalancer.ingress[0].hostname}'

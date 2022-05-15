@@ -1,0 +1,7 @@
+---
+FORMAT: json
+CLUSTER_NAME: "{{ lookup('env', 'EKS_NAME')}}"
+REGION: us-east-2
+SYSTEM_USER: eks
+ACCESS_KEY: "{{ lookup('env', 'ACCESS_KEY')}}"
+SECRET_ACCESS_KEY: "{{ lookup('env', 'SECRET_ACCESS_KEY')}}"

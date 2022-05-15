@@ -1,0 +1,18 @@
+---
+
+##### Kubernetes
+
+KUBECTL_OS: "linux"
+KUBECTL_ARCH: "amd64"
+KUBECTL_OWNER: "root"
+KUBECTL_GROUP: "root"
+KUBECTL_VERSION: "1.23.6"
+KUBECTL_BINARY_MODE: "0755"
+DIRECTORY_KUBECTL: "{{ lookup('env', 'TMPDIR') | default('/',true) }}"
+KUBECTL_URL: https://dl.k8s.io/release/v{{ KUBECTL_VERSION }}/bin/{{ KUBECTL_OS }}/{{ KUBECTL_ARCH }}/kubectl
+
+##### Helm
+
+HELM_VERSION: "v3.8.2"
+HELM_URL: https://git.io/get_helm.sh
+DIRECTORY_HELM: "{{ lookup('env', 'TMPDIR') | default('/helm.sh',true) }}"

@@ -1,0 +1,16 @@
+---
+
+#### Print Jenkins Accessability Dashboard
+
+- name: print-dashboard
+  debug:
+    msg: 
+      - "Jenkins Dashboard => {{ jenkins.stdout }}"
+      - " Port => 8080"
+
+#### Print Jenkins Password Dashboard
+
+- name: print-password
+  debug:
+    msg: 
+      - "Jenkins Password => {{ password.stdout }}"

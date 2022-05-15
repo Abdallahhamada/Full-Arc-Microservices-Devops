@@ -1,0 +1,47 @@
+---
+
+#### Install Docker And Kubernetes Modules
+
+- name: Install Docker And Kubernetes Modules
+  pip:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - docker
+    - kubernetes
+    - pyhelm
+
+#### Download Kubectl
+
+- name: Download kubectl => ( Microservices Manager )
+  get_url:
+    url: "{{ KUBECTL_URL }}"
+    dest: "{{ DIRECTORY_KUBECTL }}"
+  tags:
+    - kubectl
+
+#### Install Kubectl 
+
+- name: Install kubectl => ( Microservices Manager )
+  command: install -o {{ KUBECTL_OWNER }} -g {{ KUBECTL_GROUP }} -m {{ KUBECTL_BINARY_MODE }} /kubectl /usr/local/bin/kubectl
+
+#### Download Helm => ( Package Manager => K8S)
+
+- name: Download Helm => ( Package Manager => K8S)
+  get_url:
+    url: "{{ HELM_URL }}"
+    dest: "{{ DIRECTORY_HELM }}"
+  tags:
+    - helm
+
+#### Change Helm Permissions => ( Package Manager => K8S)
+
+- file:
+    path: /helm.sh
+    mode: "{{ KUBECTL_BINARY_MODE }}"
+
+#### Install Helm => ( Package Manager => K8S)
+
+- name: Install Helm
+  shell: cat /helm.sh | bash -s -- --version {{ HELM_VERSION }}
+  notify: success
